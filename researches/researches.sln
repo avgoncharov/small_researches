@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorSchemeGenerator", "Col
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateFormatting", "DateFormatting\DateFormatting.csproj", "{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfInConsole", "WcfInConsole\WcfInConsole.csproj", "{DE298047-0558-4769-A162-EDB547134A95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE298047-0558-4769-A162-EDB547134A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE298047-0558-4769-A162-EDB547134A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE298047-0558-4769-A162-EDB547134A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE298047-0558-4769-A162-EDB547134A95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
