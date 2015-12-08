@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ColorSchemeGenerator
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 			var sb = new StringBuilder();
 			sb.Append("<html><body><table>");
 						
 			var buf = new List<string>();
+			
 			//Direct(sb);
-			BySin(buf);
-
-			buf = Shuffle(buf);
-
-			foreach (var itr in buf)
+			FillBySin(buf);
+			
+			foreach (var itr in Shuffle(buf))
 			{
 				sb.Append(itr);
 			}
@@ -32,7 +29,7 @@ namespace ColorSchemeGenerator
 
 		}
 
-		private static List<string> Shuffle(List<string> buf)
+		private static IEnumerable<string> Shuffle(IList<string> buf)
 		{
 			var result = new List<string>();
 			var rnd = new Random();
@@ -46,7 +43,7 @@ namespace ColorSchemeGenerator
 			return result;
 		}
 
-		private static void BySin(List<string> sb)
+		private static void FillBySin(ICollection<string> sb)
 		{
 			const double step = 1e-4;
 
@@ -70,21 +67,20 @@ namespace ColorSchemeGenerator
 				var sB = Convert.ToInt32(Math.Round(bAmp * Math.Sin(bPh + bFr * i)));
 
 				var c = Color.FromArgb((255 - rAmp) - sR, (255 - gAmp) - sG, (255 - bAmp) - sB);
-				sb.Add(String.Format(ROW_TML, c.R.ToString(), c.G.ToString(), c.B.ToString()));
+				sb.Add(String.Format(ROW_TML, c.R, c.G, c.B));
 			}			
 		}
 
-		private static void Direct(List<string> sb)
+		private static void Direct(ICollection<string> sb)
 		{
 			for (var i = 0; i < 255; i += 10)
 			{
-				//Console.WriteLine(i);
 				for (var k = 0; k < 255; k += 10)
 				{
 					for (var z = 0; z < 255; z += 10)
 					{
 						var c = Color.FromArgb(i, k, z);
-						sb.Add(String.Format(ROW_TML, c.R.ToString(), c.G.ToString(), c.B.ToString()));
+						sb.Add(String.Format(ROW_TML, c.R, c.G, c.B));
 					}
 				}
 

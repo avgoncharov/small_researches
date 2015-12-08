@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorSchemeGenerator", "ColorSchemeGenerator\ColorSchemeGenerator.csproj", "{BC8EA83C-3E5A-49F4-97F7-90AD67F715E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateFormatting", "DateFormatting\DateFormatting.csproj", "{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BC8EA83C-3E5A-49F4-97F7-90AD67F715E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC8EA83C-3E5A-49F4-97F7-90AD67F715E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC8EA83C-3E5A-49F4-97F7-90AD67F715E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D8F3FE7-F042-4E1E-B990-7430C23B6FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
