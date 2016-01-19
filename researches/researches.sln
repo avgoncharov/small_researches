@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDbPerformanceResearch"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VelosityDbRsch", "VelosityDbRsch\VelosityDbRsch.csproj", "{25C9FA50-3643-4A4D-8005-1428077D925F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqRsch", "RabbitMqRsch\RabbitMqRsch.csproj", "{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{25C9FA50-3643-4A4D-8005-1428077D925F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25C9FA50-3643-4A4D-8005-1428077D925F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25C9FA50-3643-4A4D-8005-1428077D925F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
