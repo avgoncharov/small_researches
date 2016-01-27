@@ -8,6 +8,14 @@ using Microsoft.Practices.Unity.Configuration;
 
 namespace UnityRsch
 {
+	/// <summary>
+	/// For UnityContainer.
+	/// This program shows:
+	/// 1) Symple buildup.
+	/// 2) How to register types from dll which are not in bin.
+	/// 3) How to register types from dynamically loaded assembly.
+	/// 4) How to register types by using customized UnityConfigSection.
+	/// </summary>
 	public class Program
 	{
 		public static void Main()
@@ -18,12 +26,12 @@ namespace UnityRsch
 			Console.WriteLine("----------------------------------------------");
 			LoadFromConfigWithSubDirsWithCustomConfigSection();
 			Console.WriteLine("----------------------------------------------");
-			LoadDynamicly();
+			LoadDynamically();
 			Console.ReadLine();		
 
 		}
 
-		private static void LoadDynamicly()
+		private static void LoadDynamically()
 		{
 			var x = Assembly.LoadFrom(@"Outside\TypesForUnityDynamicLoading.dll");
 			var expected = x.GetExportedTypes().FirstOrDefault(type => typeof(IForUnityTest).IsAssignableFrom(type));
