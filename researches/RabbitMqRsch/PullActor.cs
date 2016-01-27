@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace RabbitMqRsch
 {
 	/// <summary>
-	/// Actor which uses pull-strategy.
+	/// Actor which uses a pull-strategy.
 	/// </summary>
 	public class PullActor:IDisposable
 	{

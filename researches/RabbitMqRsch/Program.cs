@@ -5,6 +5,11 @@ using RabbitMQ.Client;
 
 namespace RabbitMqRsch
 {
+	/// This program shows (for RabbitMq):
+	/// 1) How to get statistic from RabbitMq.
+	/// 2) How to create an infrastructure for event-driven (push) strategy working with RabbitMq.
+	/// 3) How to create an infrastructure for pull-strategy working with RabbitMq.
+	/// 4) Simple example of using generic data contract instead known types.
 	public class Program
 	{
 		public static void Main(string[] args)
@@ -67,7 +72,7 @@ namespace RabbitMqRsch
 
 		private static void ShowSimpleGenericWrapper()
 		{
-			//Serialization data contracts without any known types, by using generics.
+			// Simple example of using generic data contract instead known types.
 			var m = new Message2{Content = "xyz", Count = 1};
 			var w = new MessageWrapper<Message2> { Guid = Guid.Empty, Message = m };
 			var body = SimpleSerializer.Serialize(w);
