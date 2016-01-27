@@ -1,45 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Threading;
-using System.Xml;
+using RabbitMqRsch.StatisticApi;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
 namespace RabbitMqRsch
 {
-	internal class ConsumerContainer
-	{
-		internal ConsumerContainer(IModel channel, Action<BasicDeliverEventArgs, Action<BasicDeliverEventArgs>> callBack)
-		{
-			_channel = channel;
-			_consumer = new EventingBasicConsumer(_channel);
-			_callBack = callBack;
-			_consumer.Received += ReceivedHandler;
-			_channel.BasicConsume(queue: "hello", noAck: false, consumer: _consumer);
-		}
-
-		private void ReceivedHandler(object sender, BasicDeliverEventArgs e)
-		{
-			_callBack(e, (x) =>
-			{
-				_consumer.Model.BasicReject(x.DeliveryTag, true);
-			});
-		}
-
-		private Action<BasicDeliverEventArgs, Action<BasicDeliverEventArgs>> _callBack;
-		private readonly IModel _channel;
-		private readonly EventingBasicConsumer _consumer;
-	}
-
 	public class Program
 	{
-		private static ConnectionFactory _factory;
-
 		public static void Main(string[] args)
 		{
+			ShowSimpleGenericWrapper();
+
+			_token = Source.Token;
+
+			Console.WriteLine(RabbitMqStatisticGetter.GetStatisticForQueuer("testQueueName_msg"));
 
 			_factory = new ConnectionFactory
 			{
@@ -51,14 +25,16 @@ namespace RabbitMqRsch
 				Protocol = Protocols.AMQP_0_9_1
 			};
 
+			
 			ThreadPool.QueueUserWorkItem(SendInLoop);
-
-			ConsumerContainer[] v = new ConsumerContainer[2];
+			
+			const int count = 1;
+			var v = new EventingConsumerContainer[count];
+			var pullActors = new PullActor[count];
 
 			using (var connection = _factory.CreateConnection())
 			{
-				var buf = new List<IModel>();
-				for (int i = 0; i < 2; i++)
+				for (int i = 0; i < count; i++)
 				{
 					var channel = connection.CreateModel();
 
@@ -68,106 +44,74 @@ namespace RabbitMqRsch
 						autoDelete: false,
 						arguments: null);
 
-					buf.Add(channel);
+					v[i] = new EventingConsumerContainer(channel, QueueName, Source.Token, i);
+					
+					channel = connection.CreateModel();
 
-					v[i] = new ConsumerContainer(channel, ProcessMsg);
-				}
-
-				Thread.Sleep(TimeSpan.FromSeconds(5));
-				foreach (var itr in buf)
-				{
-					itr.Dispose();
-				}
-				Console.ReadLine();
-			}
-		}
-
-		private static void ProcessMsg(BasicDeliverEventArgs ea, Action<BasicDeliverEventArgs> timeoutExpire)
-		{
-			var rnd = new Random(DateTime.UtcNow.Millisecond);
-			var body = ea.Body;
-			var message = SimpleSerializer.Deserialize<Message>(body);
-			Console.WriteLine("[{0}, ThreadID: {1}] [x] Received {2}", DateTime.UtcNow, 0, message);
-			if (rnd.Next(1000) > 800)
-			{
-				timeoutExpire(ea);
-				return;
-			}
-			Thread.Sleep(rnd.Next(3000));
-		}
-
-
-
-		private static void SendInLoop(object state)
-		{
-			var factory = _factory;
-			var rnd = new Random();
-			using (var connection = factory.CreateConnection())
-			{
-				using (var channel = connection.CreateModel())
-				{
-					channel.QueueDeclare(queue: "hello",
+					channel.QueueDeclare(queue: QueueName,
 						durable: false,
 						exclusive: false,
 						autoDelete: false,
 						arguments: null);
 
-					while (true)
+					pullActors[i] = new PullActor(new PullConsumer(channel, QueueName), Source.Token, i);
+				}
+				
+				Console.ReadLine();
+				Source.Cancel();
+				Thread.Sleep(3000);
+			}
+
+
+		}
+
+		private static void ShowSimpleGenericWrapper()
+		{
+			//Serialization data contracts without any known types, by using generics.
+			var m = new Message2{Content = "xyz", Count = 1};
+			var w = new MessageWrapper<Message2> { Guid = Guid.Empty, Message = m };
+			var body = SimpleSerializer.Serialize(w);
+			var restore = SimpleSerializer.Deserialize<MessageWrapper<Message2>>(body);
+			Console.WriteLine("In restored wrapper we have msg2: {0}.", restore.Message.GetType() == typeof(Message2));
+		}
+
+		private static void SendInLoop(object state)
+		{
+//			var rnd = new Random();
+			using (var connection = _factory.CreateConnection())
+			{
+				using (var channel = connection.CreateModel())
+				{
+					channel.QueueDeclare(
+						queue: QueueName,
+						durable: false,
+						exclusive: false,
+						autoDelete: false,
+						arguments: null);
+
+					while (!_token.IsCancellationRequested)
 					{
 
-						var body = SimpleSerializer.Serialize(new Message { Content = "abc" });
+						var msg = new Message {Content = "Time: " + DateTime.UtcNow.ToLongTimeString()};
+						var body = SimpleSerializer.Serialize(msg);
 
-						channel.BasicPublish(exchange: "",
-							routingKey: "hello",
+						channel.BasicPublish(
+							exchange: "",
+							routingKey: QueueName,
 							basicProperties: null,
 							body: body);
-						Console.WriteLine(" [x] Sent");
+						Console.WriteLine(" [x] Sent {0}", msg);
 
-						Thread.Sleep(rnd.Next(2000));
+						//Thread.Sleep(rnd.Next(500, 3000));
+						Thread.Sleep(500);
 					}
 				}
 			}
 		}
-	}
 
-	static class SimpleSerializer
-	{
-		public static byte[] Serialize<T>(T obj)
-		{
-			var serializer = new DataContractSerializer(typeof(T));
-			using (var stream = new MemoryStream())
-			{
-				using (var writer = XmlDictionaryWriter.CreateBinaryWriter(stream))
-				{
-					serializer.WriteObject(writer, obj);
-				}
-				return stream.ToArray();
-			}
-		}
-
-		public static T Deserialize<T>(byte[] data)
-		{
-			var serializer = new DataContractSerializer(typeof(T));
-			using (var stream = new MemoryStream(data))
-			{
-				using (var reader = XmlDictionaryReader.CreateBinaryReader(
-						stream, XmlDictionaryReaderQuotas.Max))
-				{
-					return (T)serializer.ReadObject(reader);
-				}
-			}
-		}
-	}
-
-	[DataContract]
-	public class Message
-	{
-		[DataMember]
-		public string Content { get; set; }
-
-		public override string ToString()
-		{
-			return String.Format("Message: {{ Content: '{0}' }}", Content);
-		}
+		private static CancellationToken _token;
+		private static readonly CancellationTokenSource Source = new CancellationTokenSource();
+		private static ConnectionFactory _factory;
+		private const string QueueName = "hello";
 	}
 }

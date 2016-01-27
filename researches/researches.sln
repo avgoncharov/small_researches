@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VelosityDbRsch", "VelosityD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqRsch", "RabbitMqRsch\RabbitMqRsch.csproj", "{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadsAndTaskRsch", "ThreadsAndTaskRsch\ThreadsAndTaskRsch.csproj", "{1CA8110F-889D-4C53-8B74-25F1A9CB3FC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoqRsch", "MoqRsch\MoqRsch.csproj", "{0632E3E6-FA83-4B72-99E6-86669970493A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A015BF6-8F7C-4C5E-B09B-CB306D095C9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CA8110F-889D-4C53-8B74-25F1A9CB3FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CA8110F-889D-4C53-8B74-25F1A9CB3FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CA8110F-889D-4C53-8B74-25F1A9CB3FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CA8110F-889D-4C53-8B74-25F1A9CB3FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0632E3E6-FA83-4B72-99E6-86669970493A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0632E3E6-FA83-4B72-99E6-86669970493A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0632E3E6-FA83-4B72-99E6-86669970493A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0632E3E6-FA83-4B72-99E6-86669970493A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
