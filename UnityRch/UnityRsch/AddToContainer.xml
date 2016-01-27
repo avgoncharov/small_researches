@@ -1,0 +1,30 @@
+﻿<unity xmlns="http://schemas.microsoft.com/practices/2010/unity">
+
+	<alias alias="IForUnityTest" type="InterfaceForUnity.IForUnityTest, InterfaceForUnity" />
+	<alias alias="ClassForUnityRsch" type="ClassForUnity.ClassForUnityRsch, ClassForUnity" />
+	<alias alias="X1" type="ClassForUnity.X1, ClassForUnity" />
+	<alias alias="Y1" type="ClassForUnity.Y1, ClassForUnity" />
+	
+	<container>
+		<register type="X1" mapTo="X1" name="q3" >
+			<property name="Host" value="33exn3"/>
+			<property name="Port" value="333"/>
+		</register>
+		<register type="Y1" mapTo="Y1" name="q3" >
+			<property name="Name" value="333_AAA"/>
+			<property name="LastName" value="333_BBB"/>
+		</register>
+
+		<register type="IForUnityTest" mapTo="ClassForUnityRsch" name="q3" >
+			<constructor>
+				<param name="x">
+					<dependency name="q3" type="X1" />
+				</param>
+				<param name="y">
+					<dependency name="q3" type="Y1" />
+				</param>
+			</constructor>
+		</register>
+	</container>
+</unity>
+
